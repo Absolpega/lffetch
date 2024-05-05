@@ -1,8 +1,8 @@
 package = "lffetch"
-version = "1.0-1"
+version = "1.0-2"
 source = {
     url = "git+https://github.com/absolpega/lffetch",
-    tag = "1.0-1",
+    tag = "1.0-2",
 }
 description = {
     homepage = "https://github.com/absolpega/lffetch",
