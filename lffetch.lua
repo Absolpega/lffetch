@@ -84,9 +84,10 @@ function json.decode(str)
     return nil, 0
 end
 
+local script_location = debug.getinfo(1).source:match("@?(.*/)")
 local fastfetch = "fastfetch"
 local cmd = fastfetch .. " --format json " .. table.concat(arg, " ")
-local logo = assert(io.open("logos/arch.txt"))
+local logo
 local color = 96
 local logo_key_margin = 5
 local key_value_margin = 2
@@ -122,7 +123,11 @@ local module_format = {
         return nil, ("-"):rep(title_len)
     end,
     os = function(key, result)
-        logo = io.open("logos/" .. result.id .. ".txt") or logo
+        logo = assert(
+            io.open(script_location .. "/logos/arch.txt")
+                or io.open(script_location .. "/../logos/arch.txt"),
+            "logo not found"
+        )
         return key, result.prettyName or result.name
     end,
     kernel = function(key, result)
