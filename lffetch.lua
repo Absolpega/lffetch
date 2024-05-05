@@ -171,7 +171,7 @@ local module_format = {
     shell = function(key, result)
         local name = result.prettyName or result.proccessName
         local shell_env = os.getenv("SHELL"):gsub("%w+/", ""):gsub("/", "")
-        return key, name == "lua" and shell_env or name
+        return key, name:find("lua") and shell_env or name
     end,
     display = function(_, result)
         local t = {}
