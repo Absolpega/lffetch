@@ -192,10 +192,26 @@ local module_format = {
         return key, result.prettyName or result.proccessName
     end,
     theme = function(key, result)
-        return key, result
+        if type(result) == "string" then
+            return key, result
+        end
+
+        for _, v in pairs(result) do
+            if v ~= "" then
+                return key, v
+            end
+        end
     end,
     icons = function(key, result)
-        return key, result
+        if type(result) == "string" then
+            return key, result
+        end
+
+        for _, v in pairs(result) do
+            if v ~= "" then
+                return key, v
+            end
+        end
     end,
     terminal = function(key, result)
         return key, result.prettyName or result.proccessName
@@ -259,13 +275,19 @@ for _, module in ipairs(fetch) do
             longest_key = math.max(longest_key, #pair[1])
         end
 
+        local function insert(pair)
+            if type(pair[2]) == "string" or type(pair[2]) == "number" then
+                table.insert(pairs, pair)
+            end
+        end
+
         if pair[2] then
             if type(pair[1]) == "table" then
                 for _, p in ipairs(pair) do
-                    table.insert(pairs, p)
+                    insert(p)
                 end
             else
-                table.insert(pairs, pair)
+                insert(pair)
             end
         end
     end
