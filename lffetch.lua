@@ -181,7 +181,7 @@ local module_format = {
     display = function(_, result)
         local t = {}
         for i, monitor in ipairs(result) do
-            t[i] = monitor.width .. "x" .. monitor.height
+            t[i] = monitor.output.width .. "x" .. monitor.output.height
         end
         return "Resolution", table.concat(t, ", ")
     end,
