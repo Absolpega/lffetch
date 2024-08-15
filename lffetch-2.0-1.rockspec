@@ -1,5 +1,5 @@
 package = "lffetch"
-version = "1.0-4"
+version = "2.0-1"
 source = {
     url = "git+https://github.com/absolpega/lffetch",
     tag = version,
@@ -16,5 +16,4 @@ build = {
     install = {
         bin = { "lffetch.lua" },
     },
-    copy_directories = { "logos" },
 }
