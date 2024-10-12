@@ -1,5 +1,11 @@
 #!/usr/bin/env lua
 
+package.path = (
+    (os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config"))
+    .. "/fastfetch/?.lua;"
+) .. package.path
+pcall(require, "config")
+
 local unpack = unpack or table.unpack
 local function strip_ansi_codes(str)
     -- https://stackoverflow.com/a/49209650
@@ -12,7 +18,7 @@ local function utf8chars(str)
     end
     return chars
 end
-local margin = 5
+local margin = margin or 4
 local cmd = "fastfetch --pipe false --logo-position top "
     .. table.concat(arg, " ")
 
@@ -52,7 +58,9 @@ local fetch = { unpack(lines, lines_of_logo + 1 + empty_lines) }
 
 for i = 1, math.max(#logo, #fetch) do
     local last_logo_line_len = #utf8chars(strip_ansi_codes(logo[#logo]))
-    final[i] = (logo[i] or (" "):rep(last_logo_line_len)) .. (" "):rep(margin) .. (fetch[i] or "")
+    final[i] = (logo[i] or (" "):rep(last_logo_line_len))
+        .. (" "):rep(margin)
+        .. (fetch[i] or "")
 end
 
 io.writeln(table.concat(final, "\n"))
